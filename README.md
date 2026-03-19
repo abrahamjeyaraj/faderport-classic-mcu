@@ -56,33 +56,47 @@ A lightweight MIDI bridge that translates the original PreSonus FaderPort's nati
 
 ## Quick Start
 
-### macOS (menu bar app)
+### Install from DMG (recommended)
+
+1. **Download** the DMG from [Gumroad](https://abrahamjeyaraj.gumroad.com/l/fjsbct)
+2. **Open** the DMG and drag `FaderPortMCU` to a folder (e.g., `/Applications` or your Desktop)
+3. **Copy** `librtmidi.7.dylib` to the **same folder** as `FaderPortMCU`
+4. **Connect** your FaderPort Classic via USB
+5. **Launch** `FaderPortMCU` — a mixer icon (☰) appears in your menu bar
+6. If macOS blocks it: **System Settings > Privacy & Security > Open Anyway**
+
+### Set up your DAW
+
+**Logic Pro:**
+1. Go to **Logic Pro > Control Surfaces > Setup**
+2. Click **New > Install** → select **Mackie Control**
+3. Set MIDI Input to **"FaderPort MCU"**
+4. Set MIDI Output to **"FaderPort MCU"**
+
+**Cubase:**
+1. Go to **Studio > Studio Setup**
+2. Click **+ Add Device** → select **Mackie Control**
+3. Set MIDI Input to **"FaderPort MCU"**
+4. Set MIDI Output to **"FaderPort MCU"**
+5. Go to **MIDI Port Setup** → **uncheck** "In All MIDI Inputs" for both FaderPort MCU and FaderPort
+
+**Other DAWs (Reaper, Ableton, etc.):**
+- Add a Mackie Control / MCU control surface
+- Set MIDI input and output to **"FaderPort MCU"**
+
+> **Tip:** Start FaderPortMCU **before** opening your DAW for the smoothest connection.
+
+### Build from source
 
 ```bash
-# Build
 cd cpp
 cmake -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build -j$(sysctl -n hw.ncpu)
 
-# Run (tray app)
+# Menu bar app
 ./build/faderport_tray
-```
 
-A fader icon appears in your menu bar. Then in your DAW:
-
-- **Logic Pro**: Control Surfaces > Setup > Add > Mackie Control > Set MIDI to "FaderPort MCU"
-- **Cubase**: Studio > Studio Setup > Add Mackie Control > Set MIDI to "FaderPort MCU"
-
-### CLI version
-
-```bash
-# List available MIDI ports
-./build/faderport_mcu_cli --list-ports
-
-# Run bridge
-./build/faderport_mcu_cli
-
-# Run with verbose logging
+# CLI version
 ./build/faderport_mcu_cli --verbose
 ```
 

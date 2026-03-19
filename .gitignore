@@ -1,0 +1,21 @@
+# Build
+cpp/build/
+*.o
+*.dylib
+*.app
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+*.egg-info/
+
+# IDE
+.vscode/
+.idea/
+*.xcodeproj/
+*.xcworkspace/
+.DS_Store
+
+# Claude
+.claude/

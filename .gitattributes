@@ -1,0 +1,4 @@
+# Language detection overrides for GitHub
+*.cpp linguist-language=C++
+*.h linguist-language=C++
+*.mm linguist-language=Objective-C++

@@ -104,17 +104,6 @@ Produces:
 - `build/faderport_mcu_cli` — Command-line version
 - `build/faderport_tray` — macOS menu bar app
 
-### Python Prototype
-
-A Python prototype is included for experimentation:
-
-```bash
-cd ..
-python3 -m venv .venv && source .venv/bin/activate
-pip install python-rtmidi
-python -m faderport_mcu --verbose
-```
-
 ## How It Works
 
 ```

@@ -6,6 +6,8 @@ A lightweight MIDI bridge that translates the original PreSonus FaderPort's nati
 
 > The original FaderPort (Classic, ~2008) uses a proprietary protocol and only officially supports Pro Tools and Studio One. PreSonus dropped support years ago. This bridge gives it a second life.
 
+[![Download](https://img.shields.io/badge/Download-$4.99-blue?style=for-the-badge)](https://abrahamjeyaraj.gumroad.com/l/fjsbct)
+
 ![macOS menu bar](https://img.shields.io/badge/macOS-menu%20bar%20app-blue)
 ![Binary size](https://img.shields.io/badge/binary-115KB-green)
 ![Memory](https://img.shields.io/badge/RAM-~6MB-green)

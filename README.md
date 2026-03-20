@@ -54,71 +54,81 @@ A lightweight MIDI bridge that translates the original PreSonus FaderPort's nati
 | **Trns** | Edit Instrument (Cubase) |
 | **Punch** | Replace |
 
-## Quick Start
+## Installation
 
-### Install from DMG (recommended)
+### Option 1: Download the DMG (macOS only)
 
-1. **Download** the DMG from [Gumroad](https://abrahamjeyaraj.gumroad.com/l/fjsbct)
-2. **Open** the DMG and drag `FaderPortMCU` to a folder (e.g., `/Applications` or your Desktop)
-3. **Copy** `librtmidi.7.dylib` to the **same folder** as `FaderPortMCU`
+> **Note:** The pre-built DMG is currently available for **macOS** only. Windows and Linux users can [build from source](#option-2-build-from-source).
+
+1. **Download** the DMG from [Gumroad](https://abrahamjeyaraj.gumroad.com/l/fjsbct) ($4.99)
+2. **Open** the DMG — you'll see the FaderPortMCU app and an Applications folder
+3. **Drag** `FaderPortMCU.app` into the **Applications** folder
 4. **Connect** your FaderPort Classic via USB
-5. **Launch** `FaderPortMCU` — a mixer icon (☰) appears in your menu bar
-6. If macOS blocks it: **System Settings > Privacy & Security > Open Anyway**
+5. **Launch** FaderPortMCU from Applications (or Spotlight)
+   - A mixer icon appears in your **menu bar** (top-right, near clock)
+   - The app runs in the background — no dock icon, no windows
+6. **First launch:** macOS may block it — go to **System Settings > Privacy & Security > Open Anyway**
 
-### Set up your DAW
+To quit, click the mixer icon in the menu bar → **Quit FaderPort MCU**.
 
-**Logic Pro:**
+### Option 2: Build from source
+
+Requires: C++17 compiler (Clang, GCC, MSVC), CMake 3.14+. RtMidi is fetched automatically.
+
+```bash
+git clone https://github.com/abrahamjeyaraj/faderport-classic-mcu.git
+cd faderport-classic-mcu/cpp
+cmake -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build -j$(sysctl -n hw.ncpu)
+```
+
+This produces two binaries:
+
+| Binary | Description |
+|---|---|
+| `build/faderport_tray` | **macOS menu bar app** — runs in background with tray icon |
+| `build/faderport_mcu_cli` | **Command-line version** — runs in terminal with log output |
+
+**Run the menu bar app:**
+```bash
+./build/faderport_tray
+```
+
+**Run the CLI version (useful for debugging):**
+```bash
+./build/faderport_mcu_cli --verbose
+```
+
+**List available MIDI ports:**
+```bash
+./build/faderport_mcu_cli --list-ports
+```
+
+## DAW Setup
+
+Once FaderPortMCU is running, configure your DAW to use it as a Mackie Control surface.
+
+> **Tip:** Start FaderPortMCU **before** opening your DAW for the smoothest connection.
+
+### Logic Pro
+
 1. Go to **Logic Pro > Control Surfaces > Setup**
 2. Click **New > Install** → select **Mackie Control**
 3. Set MIDI Input to **"FaderPort MCU"**
 4. Set MIDI Output to **"FaderPort MCU"**
 
-**Cubase:**
+### Cubase
+
 1. Go to **Studio > Studio Setup**
 2. Click **+ Add Device** → select **Mackie Control**
 3. Set MIDI Input to **"FaderPort MCU"**
 4. Set MIDI Output to **"FaderPort MCU"**
 5. Go to **MIDI Port Setup** → **uncheck** "In All MIDI Inputs" for both FaderPort MCU and FaderPort
 
-**Other DAWs (Reaper, Ableton, etc.):**
-- Add a Mackie Control / MCU control surface
+### Other DAWs (Reaper, Ableton, etc.)
+
+- Add a **Mackie Control / MCU** control surface
 - Set MIDI input and output to **"FaderPort MCU"**
-
-> **Tip:** Start FaderPortMCU **before** opening your DAW for the smoothest connection.
-
-### Build from source
-
-```bash
-cd cpp
-cmake -B build -DCMAKE_BUILD_TYPE=Release
-cmake --build build -j$(sysctl -n hw.ncpu)
-
-# Menu bar app
-./build/faderport_tray
-
-# CLI version
-./build/faderport_mcu_cli --verbose
-```
-
-## Building from Source
-
-### Requirements
-
-- C++17 compiler (Clang, GCC, MSVC)
-- CMake 3.14+
-- RtMidi (fetched automatically by CMake)
-
-### macOS
-
-```bash
-cd cpp
-cmake -B build -DCMAKE_BUILD_TYPE=Release
-cmake --build build -j$(sysctl -n hw.ncpu)
-```
-
-Produces:
-- `build/faderport_mcu_cli` — Command-line version
-- `build/faderport_tray` — macOS menu bar app
 
 ## How It Works
 

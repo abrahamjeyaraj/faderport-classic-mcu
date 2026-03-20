@@ -17,5 +17,8 @@ __pycache__/
 *.xcworkspace/
 .DS_Store
 
+# Local docs (not published)
+DEVLOG.md
+
 # Claude
 .claude/

@@ -92,7 +92,7 @@ void Bridge::fpFader(int value14bit) {
 void Bridge::fpEncoder(int pitchBendRaw) {
     auto dir = encoder_.process(pitchBendRaw);
     if (dir.has_value())
-        mcu_.sendVpot(0, dir.value());
+        mcu_.sendVpot(selectedChannel_, dir.value());
 }
 
 void Bridge::fpFaderTouch(bool touched) {

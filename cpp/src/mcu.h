@@ -22,7 +22,7 @@ public:
     void sendButton(int mcuNote, bool pressed);
     void sendFader(int channel, int value14bit);
     void sendFaderTouch(int channel, bool touched);
-    void sendVpot(int vpotNum, int direction);
+    void sendVpot(int vpotNum, int direction, int speed = 3);
 
 private:
     void handleSysex(const std::vector<uint8_t>& msg);

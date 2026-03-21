@@ -59,9 +59,9 @@ void McuPort::sendFaderTouch(int channel, bool touched) {
     send({MCU_NOTE_ON, note, (uint8_t)(touched ? 0x7F : 0x00)});
 }
 
-void McuPort::sendVpot(int vpotNum, int direction) {
+void McuPort::sendVpot(int vpotNum, int direction, int speed) {
     uint8_t ccNum = 0x10 + (vpotNum & 0x07);
-    uint8_t value = (direction > 0) ? 0x01 : 0x41;
+    uint8_t value = (direction > 0) ? (uint8_t)speed : (uint8_t)(0x40 + speed);
     send({MCU_CC, ccNum, value});
 }
 

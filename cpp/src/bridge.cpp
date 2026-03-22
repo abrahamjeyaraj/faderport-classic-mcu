@@ -81,7 +81,14 @@ void Bridge::fpButton(int pressId, bool pressed) {
     // Standard mapping
     auto it = FP_TO_MCU.find(pressId);
     if (it != FP_TO_MCU.end()) {
-        mcu_.sendButton(it->second, pressed);
+        int mcuNote = it->second;
+
+        // Per-channel buttons: offset by selected channel
+        // Mute (0x10-0x17), Solo (0x08-0x0F), Rec Arm (0x00-0x07)
+        if (mcuNote == MCU_MUTE || mcuNote == MCU_SOLO || mcuNote == MCU_REC_ARM)
+            mcuNote += selectedChannel_;
+
+        mcu_.sendButton(mcuNote, pressed);
     }
 }
 
@@ -115,7 +122,31 @@ void Bridge::mcuLed(int mcuNote, bool on) {
         }
     }
 
-    auto it = MCU_TO_FP_LED.find(mcuNote);
+    // Per-channel LED feedback: check if this is mute/solo/rec for the selected channel
+    int ledNote = mcuNote;
+    // Mute range 0x10-0x17: show LED only if it's for our selected channel
+    if (mcuNote >= 0x10 && mcuNote <= 0x17) {
+        if ((mcuNote - 0x10) == selectedChannel_)
+            ledNote = MCU_MUTE;  // Map back to base for LED lookup
+        else
+            return;  // Not our channel, ignore
+    }
+    // Solo range 0x08-0x0F
+    else if (mcuNote >= 0x08 && mcuNote <= 0x0F) {
+        if ((mcuNote - 0x08) == selectedChannel_)
+            ledNote = MCU_SOLO;
+        else
+            return;
+    }
+    // Rec Arm range 0x00-0x07
+    else if (mcuNote >= 0x00 && mcuNote <= 0x07) {
+        if (mcuNote == selectedChannel_)
+            ledNote = MCU_REC_ARM;
+        else
+            return;
+    }
+
+    auto it = MCU_TO_FP_LED.find(ledNote);
     if (it != MCU_TO_FP_LED.end())
         fp_.setLed(it->second, on);
 }

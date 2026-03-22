@@ -85,6 +85,11 @@ constexpr int MCU_ASSIGN_INSTRUMENT = 45;   // Edit Instrument
 constexpr int MCU_BANK_LEFT         = 0x2E;
 constexpr int MCU_BANK_RIGHT        = 0x2F;
 constexpr int MCU_GLOBAL_VIEW       = 0x33;
+// Automation
+constexpr int MCU_AUTO_READ         = 74;   // 0x4A
+constexpr int MCU_AUTO_WRITE        = 75;   // 0x4B
+constexpr int MCU_AUTO_TOUCH        = 77;   // 0x4D
+constexpr int MCU_AUTO_LATCH        = 78;   // 0x4E
 constexpr int MCU_UNDO              = 81;
 constexpr int MCU_CYCLE             = 86;
 constexpr int MCU_REPLACE           = 88;
@@ -112,6 +117,9 @@ inline const std::unordered_map<int,int> FP_TO_MCU = {
     {FP_BTN_LEFT,      MCU_CURSOR_UP},
     {FP_BTN_RIGHT,     MCU_CURSOR_DOWN},
     {FP_BTN_RECENABLE, MCU_RECORD},
+    {FP_BTN_READ,      MCU_AUTO_READ},
+    {FP_BTN_WRITE,     MCU_AUTO_WRITE},
+    {FP_BTN_FPTTOUCH,  MCU_AUTO_TOUCH},
     {FP_BTN_PUNCH,     MCU_REPLACE},
     {FP_BTN_UNDO,      MCU_UNDO},
     {FP_BTN_MIX,       MCU_GLOBAL_VIEW},
